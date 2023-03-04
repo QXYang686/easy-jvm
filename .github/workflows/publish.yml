@@ -3,8 +3,12 @@ on: [push]
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: release
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
       - run: cargo run
       - run: echo 111
+      - run: cargo publish --dry-run --token ${CRATES_TOKEN}
+        env:
+          CRATES_TOKEN: ${{ secrets.CRATES_TOKEN }}
